@@ -1,0 +1,8 @@
+# dependencies / build output
+node_modules/
+dist/
+.vite/
+
+# OS noise
+Thumbs.db
+.DS_Store

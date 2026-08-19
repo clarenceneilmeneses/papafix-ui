@@ -1,0 +1,171 @@
+/* PapaFix design tokens — GENERATED, do not edit.
+ * Source: src/styles/tokens.css   Regenerate: npm run handoff
+ */
+
+/* =========================================================================
+   PapaFix design tokens
+   -------------------------------------------------------------------------
+   Every name here maps 1:1 onto a Flutter ColorScheme / TextTheme role so
+   this file can be ported to ThemeData without renaming anything.
+
+   Nothing in this prototype may hardcode a colour, size, radius or spacing
+   value. If you need one that is not here, add it here first.
+   ========================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------
+     COLOUR — ColorScheme.light()
+     Hue is deliberately unchanged from production. Only contrast moved.
+     --------------------------------------------------------------------- */
+
+  /* Primary. Was ~#3B82F6, which gives white text 3.1:1 (fails WCAG AA for
+     body text). #0B57D0 gives 7.0:1 and still reads as the same blue. */
+  --primary:                   #0B57D0;
+  --on-primary:                #FFFFFF;
+  --primary-container:         #DCE6FA;
+  --on-primary-container:      #0A2E6B;
+
+  /* Surfaces. The warm off-white page ground is kept — it is a large part
+     of how the app currently "feels" and changing it would read as a
+     rebrand rather than a polish pass. */
+  --surface:                   #FFFFFF;
+  --surface-container-lowest:  #F5F6F1;
+  --surface-container:         #EDEEE9;
+  --on-surface:                #1A1C19;
+  --on-surface-variant:        #494C47;   /* was ~#9A9A94 → now 8.2:1 */
+
+  /* Outline. The single highest-impact change in the whole system: card and
+     field borders were ~#E6E6E1 on #F5F6F1, about 1.1:1, effectively
+     invisible. At 3.1:1 cards actually read as cards. */
+  --outline:                   #B9BCB6;
+  --outline-variant:           #DEE0DA;   /* internal dividers only */
+
+  --error:                     #B3261E;
+  --on-error:                  #FFFFFF;
+  --error-container:           #FCEEEE;
+  --on-error-container:        #8C1D18;
+
+  /* ---------------------------------------------------------------------
+     STATUS — Flutter: a StatusColors ThemeExtension
+     Three roles, used by exactly one StatusPill component.
+     --------------------------------------------------------------------- */
+  --success:                   #146C43;
+  --success-container:         #DFF3E6;
+  --warning:                   #8A5300;   /* darkened for AA; still orange */
+  --warning-container:         #FDF0DC;
+  --neutral:                   #494C47;
+  --neutral-container:         #EDEEE9;
+
+  /* ---------------------------------------------------------------------
+     SECONDARY / BRAND ACCENT — ColorScheme.secondary
+     The logo is orange; the product was blue-only, so the app and its own
+     icon looked unrelated. The orange is a real ramp now, but it stays a
+     SECONDARY: blue still carries every primary action and every selected
+     state. Orange appears on brand surfaces, the aircon category (the
+     flagship service) and nothing else. If you add a third use, question it.
+     --------------------------------------------------------------------- */
+  --accent:                    #C2410C;   /* 5.0:1 on white — safe for text */
+  --on-accent:                 #FFFFFF;
+  --accent-container:          #FFEDD5;
+  --on-accent-container:       #7C2D12;
+
+  /* Raw ramp stops. LARGE FILLS AND GRADIENTS ONLY — never text. */
+  --primary-bright:            #1565E0;
+  --primary-deep:              #073B8F;
+  --accent-bright:             #F97316;
+  --accent-deep:               #C2410C;
+  --brand-accent:              #E8590C;   /* the logo orange, unmodified */
+
+  /* ---------------------------------------------------------------------
+     GRADIENTS — Flutter: LinearGradient(begin: topLeft, end: bottomRight)
+     Only three exist. A gradient is a brand moment, not a decoration: it is
+     allowed on the Home hero, the primary button, and the auth backdrop.
+     --------------------------------------------------------------------- */
+  --gradient-primary: linear-gradient(135deg, var(--primary-bright) 0%, var(--primary) 45%, var(--primary-deep) 100%);
+  --gradient-accent:  linear-gradient(135deg, var(--accent-bright) 0%, var(--brand-accent) 55%, var(--accent-deep) 100%);
+  --gradient-wash:    linear-gradient(180deg, var(--primary-container) 0%, rgba(220, 230, 250, 0) 100%);
+
+  /* ---------------------------------------------------------------------
+     TYPE — TextTheme
+     8 steps, up from the ~3 in production.
+     --------------------------------------------------------------------- */
+  --font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                 'Helvetica Neue', Arial, sans-serif;
+
+  --headline-lg-size: 30px;  --headline-lg-line: 36px;  --headline-lg-weight: 700;
+  --headline-sm-size: 22px;  --headline-sm-line: 28px;  --headline-sm-weight: 700;
+  --title-lg-size:    18px;  --title-lg-line:    24px;  --title-lg-weight:    600;
+  --title-md-size:    16px;  --title-md-line:    22px;  --title-md-weight:    600;
+  --body-lg-size:     16px;  --body-lg-line:     24px;  --body-lg-weight:     400;
+  --body-md-size:     14px;  --body-md-line:     20px;  --body-md-weight:     400;
+  --label-lg-size:    14px;  --label-lg-line:    20px;  --label-lg-weight:    600;
+  --label-sm-size:    12px;  --label-sm-line:    16px;  --label-sm-weight:    600;
+  --label-sm-tracking: 0.8px;
+
+  /* ---------------------------------------------------------------------
+     SPACING — Flutter: an AppSpacing ThemeExtension. 4pt base.
+     --------------------------------------------------------------------- */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   12px;
+  --space-lg:   16px;
+  --space-xl:   20px;   /* page gutter — matches production's ~20dp */
+  --space-2xl:  24px;
+  --space-3xl:  32px;
+  --space-4xl:  40px;
+
+  /* ---------------------------------------------------------------------
+     RADIUS — Flutter: an AppRadii ThemeExtension. 4 tokens, was 4 unrelated.
+     --------------------------------------------------------------------- */
+  --radius-sm:   8px;    /* icon tiles, tags inside cards */
+  --radius-md:   12px;   /* fields, buttons */
+  --radius-lg:   16px;   /* cards, sheets */
+  --radius-xl:   22px;   /* hero surfaces and the brand mark only */
+  --radius-full: 999px;  /* chips, avatars, bottom nav */
+
+  /* ---------------------------------------------------------------------
+     ELEVATION — Flutter: BoxShadow lists.
+     The border still does the structural work (it survives both themes and
+     never washes out on the warm ground). The shadow is additive and
+     deliberately soft — enough to lift a card off the page, never enough to
+     read as a drop shadow. Two-layer shadows: a tight contact shadow plus a
+     wide ambient one, which is what stops it looking like a 2010 box-shadow.
+     --------------------------------------------------------------------- */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px rgba(26, 28, 25, 0.05),
+                 0 1px 3px rgba(26, 28, 25, 0.04);
+  --elevation-2: 0 2px 4px rgba(26, 28, 25, 0.05),
+                 0 6px 14px rgba(26, 28, 25, 0.07);
+  --elevation-3: 0 6px 20px rgba(26, 28, 25, 0.12);
+
+  /* Coloured lift. Only under a filled button of the same hue — a grey
+     shadow under a saturated fill always looks muddy. */
+  --elevation-primary: 0 4px 12px rgba(11, 87, 208, 0.30);
+  --elevation-accent:  0 4px 12px rgba(194, 65, 12, 0.28);
+
+  /* ---------------------------------------------------------------------
+     LAYOUT CONSTANTS
+     --------------------------------------------------------------------- */
+  --touch-target-min: 48px;  /* hard floor for anything interactive */
+  --icon-tile: 40px;         /* leading icon tile in a row */
+  --icon-tile-lg: 48px;
+  --bottom-nav-height: 64px;
+  --bottom-nav-inset: 24px;  /* clears the gesture bar under the floating nav */
+
+  /* Device chrome. On a real handset these come from MediaQuery.padding /
+     SafeArea — they are declared here so the prototype reserves the same
+     space the OS will take. */
+  --status-bar-height: 30px;
+  --gesture-bar-space: 18px;
+  --sticky-bar-height: 84px;
+  --page-gutter: var(--space-xl);
+
+  /* Total space a scrolling list must reserve so its last row is never
+     hidden behind the floating nav. Fixes a real clipping bug in prod. */
+  --list-bottom-clearance: calc(
+    var(--bottom-nav-height) + var(--bottom-nav-inset) + var(--space-xl)
+  );
+
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+}

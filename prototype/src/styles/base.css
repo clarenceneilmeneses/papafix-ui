@@ -1,0 +1,89 @@
+/* Reset + element defaults. Everything sources from tokens.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-line);
+  color: var(--on-surface);
+  background: var(--surface-container);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, figure { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+input, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a { color: var(--primary); }
+
+/* Visible focus for keyboard users only. Touch/mouse taps stay clean. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Type utility classes: the only sanctioned way to set type ---- */
+.t-headline-lg {
+  font-size: var(--headline-lg-size); line-height: var(--headline-lg-line);
+  font-weight: var(--headline-lg-weight); letter-spacing: -0.7px;
+}
+.t-headline-sm {
+  font-size: var(--headline-sm-size); line-height: var(--headline-sm-line);
+  font-weight: var(--headline-sm-weight); letter-spacing: -0.4px;
+}
+.t-title-lg {
+  font-size: var(--title-lg-size); line-height: var(--title-lg-line);
+  font-weight: var(--title-lg-weight); letter-spacing: -0.2px;
+}
+.t-title-md {
+  font-size: var(--title-md-size); line-height: var(--title-md-line);
+  font-weight: var(--title-md-weight);
+}
+.t-body-lg {
+  font-size: var(--body-lg-size); line-height: var(--body-lg-line);
+  font-weight: var(--body-lg-weight);
+}
+.t-body-md {
+  font-size: var(--body-md-size); line-height: var(--body-md-line);
+  font-weight: var(--body-md-weight);
+}
+.t-label-lg {
+  font-size: var(--label-lg-size); line-height: var(--label-lg-line);
+  font-weight: var(--label-lg-weight);
+}
+.t-label-sm {
+  font-size: var(--label-sm-size); line-height: var(--label-sm-line);
+  font-weight: var(--label-sm-weight); letter-spacing: var(--label-sm-tracking);
+  text-transform: uppercase;
+}
+
+.c-on-surface          { color: var(--on-surface); }
+.c-on-surface-variant  { color: var(--on-surface-variant); }
+.c-primary             { color: var(--primary); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

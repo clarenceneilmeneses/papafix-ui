@@ -1,0 +1,132 @@
+{
+  "$comment": "GENERATED from src/styles/tokens.css — do not edit. Regenerate: npm run handoff",
+  "color": {
+    "primary": "#0B57D0",
+    "on-primary": "#FFFFFF",
+    "primary-container": "#DCE6FA",
+    "on-primary-container": "#0A2E6B",
+    "surface": "#FFFFFF",
+    "surface-container-lowest": "#F5F6F1",
+    "surface-container": "#EDEEE9",
+    "on-surface": "#1A1C19",
+    "on-surface-variant": "#494C47",
+    "outline": "#B9BCB6",
+    "outline-variant": "#DEE0DA",
+    "error": "#B3261E",
+    "on-error": "#FFFFFF",
+    "error-container": "#FCEEEE",
+    "on-error-container": "#8C1D18",
+    "success": "#146C43",
+    "success-container": "#DFF3E6",
+    "warning": "#8A5300",
+    "warning-container": "#FDF0DC",
+    "neutral": "#494C47",
+    "neutral-container": "#EDEEE9",
+    "accent": "#C2410C",
+    "on-accent": "#FFFFFF",
+    "accent-container": "#FFEDD5",
+    "on-accent-container": "#7C2D12",
+    "primary-bright": "#1565E0",
+    "primary-deep": "#073B8F",
+    "accent-bright": "#F97316",
+    "accent-deep": "#C2410C",
+    "brand-accent": "#E8590C"
+  },
+  "space": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "20px",
+    "2xl": "24px",
+    "3xl": "32px",
+    "4xl": "40px"
+  },
+  "radius": {
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "22px",
+    "full": "999px"
+  },
+  "type": {
+    "headlineLarge": {
+      "size": "30",
+      "lineHeight": "36",
+      "weight": 700,
+      "letterSpacing": -0.7,
+      "uppercase": false
+    },
+    "headlineSmall": {
+      "size": "22",
+      "lineHeight": "28",
+      "weight": 700,
+      "letterSpacing": -0.4,
+      "uppercase": false
+    },
+    "titleLarge": {
+      "size": "18",
+      "lineHeight": "24",
+      "weight": 600,
+      "letterSpacing": -0.2,
+      "uppercase": false
+    },
+    "titleMedium": {
+      "size": "16",
+      "lineHeight": "22",
+      "weight": 600,
+      "letterSpacing": 0,
+      "uppercase": false
+    },
+    "bodyLarge": {
+      "size": "16",
+      "lineHeight": "24",
+      "weight": 400,
+      "letterSpacing": 0,
+      "uppercase": false
+    },
+    "bodyMedium": {
+      "size": "14",
+      "lineHeight": "20",
+      "weight": 400,
+      "letterSpacing": 0,
+      "uppercase": false
+    },
+    "labelLarge": {
+      "size": "14",
+      "lineHeight": "20",
+      "weight": 600,
+      "letterSpacing": 0,
+      "uppercase": false
+    },
+    "labelSmall": {
+      "size": "12",
+      "lineHeight": "16",
+      "weight": 600,
+      "letterSpacing": 0.8,
+      "uppercase": true
+    }
+  },
+  "elevation": {
+    "0": "none",
+    "1": "0 1px 2px rgba(26, 28, 25, 0.05),\r\n                 0 1px 3px rgba(26, 28, 25, 0.04)",
+    "2": "0 2px 4px rgba(26, 28, 25, 0.05),\r\n                 0 6px 14px rgba(26, 28, 25, 0.07)",
+    "3": "0 6px 20px rgba(26, 28, 25, 0.12)",
+    "primary": "0 4px 12px rgba(11, 87, 208, 0.30)",
+    "accent": "0 4px 12px rgba(194, 65, 12, 0.28)"
+  },
+  "gradient": {
+    "primary": "linear-gradient(135deg, var(--primary-bright) 0%, var(--primary) 45%, var(--primary-deep) 100%)",
+    "accent": "linear-gradient(135deg, var(--accent-bright) 0%, var(--brand-accent) 55%, var(--accent-deep) 100%)",
+    "wash": "linear-gradient(180deg, var(--primary-container) 0%, rgba(220, 230, 250, 0) 100%)"
+  },
+  "layout": {
+    "touchTargetMin": "48",
+    "bottomNavHeight": "64",
+    "bottomNavInset": "24",
+    "statusBarHeight": "30",
+    "gestureBarSpace": "18",
+    "iconTile": "40",
+    "iconTileLg": "48"
+  }
+}

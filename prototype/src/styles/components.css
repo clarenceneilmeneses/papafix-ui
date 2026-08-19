@@ -1,0 +1,1103 @@
+/* =========================================================================
+   Shared components. Each block corresponds to one widget the mobile dev
+   would build in lib/widgets/. Names match.
+   ========================================================================= */
+
+/* ---------- PhoneFrame (prototype chrome — NOT part of the app) ----------
+   A top bar for the controls, a detached navigator pill, and a stage that
+   scales the device mock down to fit the window — so the whole screen is
+   visible at 100% browser zoom instead of needing to be zoomed out. */
+.proto { display: flex; min-height: 100%; background: var(--surface-container); }
+.proto__body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.proto__topbar { display: none; }
+.proto__banner { display: none; }
+
+.proto__nav { display: none; }
+.proto__rail-title { color: var(--on-surface-variant); margin-bottom: var(--space-md); }
+.proto__rail-group { margin-bottom: var(--space-sm); }
+.proto__rail-group:last-child { margin-bottom: 0; }
+.proto__rail-note {
+  color: var(--on-surface-variant); margin-bottom: var(--space-sm);
+  line-height: var(--body-md-line);
+}
+.proto__rail-head {
+  display: flex; align-items: center; gap: var(--space-sm);
+  width: 100%; padding: var(--space-sm) var(--space-sm);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-variant); text-align: left;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.proto__rail-head:hover { background: var(--surface-container-lowest); color: var(--on-surface); }
+.proto__rail-chev {
+  display: inline-flex; flex: 0 0 auto; color: var(--outline);
+  transition: transform var(--transition-fast);
+}
+.proto__rail-chev.is-open { transform: rotate(90deg); color: var(--on-surface-variant); }
+.proto__rail-count {
+  flex: 0 0 auto; min-width: 20px; text-align: center;
+  color: var(--on-surface-variant); opacity: 0.7;
+}
+
+.proto__rail-link {
+  display: block; margin-left: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.proto__rail-link:hover { background: var(--surface-container-lowest); color: var(--on-surface); }
+.proto__rail-link.is-active {
+  background: var(--primary); color: var(--on-primary);
+  font-weight: var(--title-md-weight);
+}
+
+.proto__stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0; }
+
+/* ---- Device mock (prototype chrome) ----
+   On a phone the app just fills the viewport; the handset supplies its own
+   bezel, status bar and gesture bar. On a desktop review the mock stands in
+   for them, so the reserved space is visible rather than imagined. */
+.device { position: relative; }
+.device-fit { position: relative; }
+.phone {
+  width: 100%; height: 100dvh;
+  background: var(--surface-container-lowest);
+  overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+}
+.statusbar, .gesturebar { display: none; }
+
+@media (min-width: 900px) {
+  /* ---- The navigator: full height, detached as a floating pill ----
+     It runs the whole height of the window, so the top bar starts to its
+     right rather than crossing over it. Its own scrollbar is hidden — a
+     scrollbar drawn over a rounded pill cuts the corner off. */
+  .proto__nav {
+    display: block; flex: 0 0 244px; width: 244px;
+    position: sticky; top: var(--space-lg); align-self: flex-start;
+    height: calc(100dvh - var(--space-lg) * 2);
+    margin: var(--space-lg);
+    padding: var(--space-lg);
+    overflow-y: auto;
+    scrollbar-width: none; -ms-overflow-style: none;
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--elevation-2);
+  }
+  .proto__nav::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+  /* ---- Top bar: sits beside the navigator, not across it ---- */
+  .proto__topbar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; gap: var(--space-xl);
+    padding: var(--space-md) var(--space-xl) var(--space-md) 0;
+    background: var(--surface-container);
+  }
+  .proto__topbar-title { color: var(--on-surface-variant); flex: 0 0 auto; }
+  .proto__topbar-spacer { flex: 1; }
+
+  /* ---- Style guide link, in the bar rather than the index ---- */
+  .proto__devlink {
+    display: inline-flex; align-items: center;
+    padding: 8px var(--space-lg);
+    border-radius: var(--radius-full);
+    background: var(--surface); border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant); text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .proto__devlink:hover { color: var(--on-surface); border-color: var(--outline); }
+  .proto__devlink.is-active {
+    background: var(--on-surface); border-color: var(--on-surface); color: var(--surface);
+  }
+
+  .proto__dev { display: flex; align-items: center; gap: var(--space-sm); }
+  .proto__dl {
+    display: inline-flex; align-items: center;
+    padding: 6px var(--space-md);
+    border-radius: var(--radius-full);
+    background: var(--surface); border: 1px dashed var(--outline);
+    color: var(--on-surface-variant); text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    transition: all var(--transition-fast);
+  }
+  .proto__dl:hover { border-style: solid; border-color: var(--primary); color: var(--primary); }
+  .proto__dl-ext { margin-left: 5px; opacity: 0.6; font-variant-numeric: tabular-nums; }
+
+  /* ---- App switcher: one prototype, more than one app ---- */
+  .proto__apps {
+    display: flex; gap: 2px; padding: 3px; margin-bottom: var(--space-lg);
+    background: var(--surface-container); border-radius: var(--radius-full);
+  }
+  .proto__app {
+    flex: 1; padding: 8px var(--space-sm);
+    border-radius: var(--radius-full);
+    color: var(--on-surface-variant);
+    transition: all var(--transition-fast);
+  }
+  .proto__app:hover:not(:disabled) { color: var(--on-surface); }
+  .proto__app.is-active { background: var(--surface); color: var(--on-surface); box-shadow: var(--elevation-1); }
+  .proto__app:disabled { opacity: 0.55; cursor: not-allowed; }
+  .proto__soon {
+    margin: var(--space-lg) 0; padding: var(--space-lg);
+    border: 1px dashed var(--outline); border-radius: var(--radius-lg);
+    color: var(--on-surface-variant);
+  }
+
+  /* ---- What the forced state is doing ----
+     Floating at the bottom rather than in the top bar: it is a transient
+     condition, it belongs out of the way, and fixed positioning means it
+     costs the stage no height. */
+  .proto__notice {
+    position: fixed; z-index: 50;
+    /* Bottom-RIGHT, not centred: centred put it straight over the phone's
+       bottom nav, hiding the thing you are trying to preview. */
+    right: var(--space-xl); bottom: var(--space-xl);
+    display: inline-flex; align-items: center; gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-full);
+    background: var(--on-surface); color: var(--surface);
+    box-shadow: var(--elevation-3);
+    white-space: nowrap;
+  }
+  .proto__notice > svg { color: #F5C26B; flex: 0 0 auto; }
+  .proto__notice b { text-transform: uppercase; letter-spacing: 0.4px; }
+  .proto__notice-reset {
+    margin-left: var(--space-xs); padding: 6px var(--space-lg);
+    border-radius: var(--radius-full);
+    background: var(--surface); color: var(--on-surface);
+    transition: opacity var(--transition-fast);
+  }
+  .proto__notice-reset:hover { opacity: 0.85; }
+
+  /* ---- State control ---- */
+  .statectl { display: flex; align-items: center; gap: var(--space-md); }
+  .statectl__label { color: var(--on-surface-variant); }
+  .statectl__opts {
+    display: flex; gap: 2px; padding: 3px;
+    background: var(--surface); border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-full);
+  }
+  .statectl__btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px var(--space-md);
+    border-radius: var(--radius-full);
+    color: var(--on-surface-variant);
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+  .statectl__btn:hover { background: var(--surface-container-lowest); color: var(--on-surface); }
+  .statectl__btn.is-active { background: var(--primary); color: var(--on-primary); }
+  .statectl__dot {
+    width: 7px; height: 7px; border-radius: var(--radius-full);
+    background: currentColor; opacity: 0.65;
+  }
+  .statectl__btn.is-active .statectl__dot { opacity: 1; }
+
+  .proto__stage { padding: var(--space-xl); align-items: flex-start; }
+  .proto__stage--bare {
+    align-items: flex-start; justify-content: center;
+    padding: var(--space-xl); overflow-y: auto;
+  }
+
+  .device {
+    position: absolute; top: 0; left: 0; transform-origin: top left;
+    padding: 10px;                        /* the bezel */
+    background: #0B0D11;
+    border-radius: 46px;
+    box-shadow: 0 0 0 2px #262B33, 0 26px 60px rgba(11, 13, 17, 0.34);
+  }
+  .phone {
+    width: 390px; height: 844px; max-height: none;
+    border-radius: 36px;
+  }
+
+  /* Status bar sits OVER the app, the way it does on Android: the screen's
+     own colour runs underneath it. Each screen reserves the height. */
+  .statusbar {
+    display: flex; align-items: center; justify-content: space-between;
+    position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+    height: var(--status-bar-height); padding: 0 22px;
+    color: #FFFFFF; pointer-events: none;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.2px;
+  }
+  .statusbar--dark { color: var(--on-surface); }
+  .statusbar__icons { display: flex; align-items: center; gap: 6px; }
+
+  .gesturebar {
+    display: block; position: absolute; z-index: 30;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 132px; height: 4px; border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.55); pointer-events: none;
+  }
+  .gesturebar--dark { background: rgba(26, 28, 25, 0.30); }
+}
+
+/* ---------- Screen scaffold ---------- */
+.screen { display: flex; flex-direction: column; height: 100%; min-height: 0; background: var(--surface-container-lowest); }
+.screen__scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.page { padding: 0 var(--page-gutter); }
+.pad-for-nav { padding-bottom: var(--list-bottom-clearance); }
+.pad-for-bar { padding-bottom: var(--space-2xl); }
+
+/* ---------- AppHeader ---------- */
+.header { padding: var(--space-md) var(--page-gutter) var(--space-lg); background: var(--surface-container-lowest); }
+.header__bar { display: flex; align-items: center; gap: var(--space-sm); min-height: var(--touch-target-min); }
+.header__back {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch-target-min); height: var(--touch-target-min);
+  margin-left: calc(var(--space-md) * -1);
+  border-radius: var(--radius-full);
+  color: var(--on-surface); flex: 0 0 auto;
+  transition: background var(--transition-fast);
+}
+.header__back:hover { background: var(--surface-container); }
+.header__spacer { flex: 1; }
+.header__title { margin-top: var(--space-xs); }
+.header__subtitle { margin-top: var(--space-xs); color: var(--on-surface-variant); }
+
+/* ---------- Card ----------
+   The border still does the structural work. The shadow is additive and very
+   soft: enough to lift the card off the warm ground, never enough to read as
+   a drop shadow. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--elevation-1);
+}
+.card--flush { padding: 0; }
+.card--tappable {
+  display: block; width: 100%; text-align: left; text-decoration: none; color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+}
+.card--tappable:hover { border-color: var(--outline); box-shadow: var(--elevation-2); }
+/* Flutter: InkWell press state. A 1px drop reads as "pressed" on a bordered
+   card far more clearly than the background tint did — the border was
+   swallowing the tint entirely. */
+.card--tappable:active { transform: translateY(1px); box-shadow: var(--elevation-1); }
+.card--selected {
+  border-color: var(--primary); border-width: 2px;
+  background: var(--primary-container); padding: calc(var(--space-xl) - 1px);
+  box-shadow: var(--elevation-1);
+}
+/* A disabled row should not look like a card that failed to load. Dashed and
+   unfilled reads as "not yet", which is what "Coming soon" means. */
+.card--inert {
+  background: transparent; cursor: default; box-shadow: none;
+  border-style: dashed; border-color: var(--outline);
+}
+.card-stack { display: flex; flex-direction: column; gap: var(--space-md); }
+
+/* ---------- Hero: the one gradient surface per screen ----------
+   Flutter: a Container with a LinearGradient BoxDecoration. The two pale
+   circles are a Stack of two Positioned circles at 7-10% white — they are
+   what stop a large flat fill from reading as an unstyled rectangle. */
+.hero {
+  position: relative; overflow: hidden;
+  border: none; border-radius: var(--radius-xl);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  padding: var(--space-xl);
+  box-shadow: var(--elevation-primary);
+  width: 100%; text-align: left;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.hero:hover { box-shadow: var(--elevation-3); }
+.hero:active { transform: translateY(1px); box-shadow: var(--elevation-2); }
+.hero--accent { background: var(--gradient-accent); box-shadow: var(--elevation-accent); }
+.hero--tall { padding: var(--space-2xl) var(--space-xl); }
+.hero--tall .hero__icon { width: 58px; height: 58px; border-radius: var(--radius-lg); }
+.hero::before, .hero::after {
+  content: ''; position: absolute; border-radius: var(--radius-full);
+  pointer-events: none; background: rgba(255, 255, 255, 0.10);
+}
+.hero::before { width: 190px; height: 190px; top: -95px; right: -55px; }
+.hero::after  { width: 120px; height: 120px; bottom: -68px; right: 64px; background: rgba(255,255,255,0.07); }
+.hero__body { position: relative; display: flex; align-items: center; gap: var(--space-lg); }
+.hero__icon {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.20); color: var(--on-primary);
+}
+
+/* ---------- SectionLabel ---------- */
+.section-label { color: var(--on-surface-variant); margin-bottom: var(--space-sm); }
+.section { margin-top: var(--space-3xl); }
+.section:first-child { margin-top: 0; }
+
+/* ---------- StatusPill: one component, three roles ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full); white-space: nowrap;
+}
+.pill__dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: currentColor; }
+.pill--success { background: var(--success-container); color: var(--success); }
+.pill--warning { background: var(--warning-container); color: var(--warning); }
+.pill--neutral { background: var(--neutral-container); color: var(--neutral); }
+.pill--info    { background: var(--primary-container); color: var(--on-primary-container); }
+
+/* ---------- Chip ---------- */
+.chip-row {
+  display: flex; gap: var(--space-sm);
+  overflow-x: auto; scrollbar-width: none;
+  padding: 0 var(--page-gutter);
+  margin: 0 calc(var(--page-gutter) * -1);
+  scroll-snap-type: x proximity;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+.chip-row > * { scroll-snap-align: start; }
+.chip-wrap { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.chip {
+  display: inline-flex; align-items: center;
+  min-height: var(--touch-target-min);
+  padding: 0 var(--space-xl);
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-full);
+  background: var(--surface); color: var(--on-surface);
+  white-space: nowrap; flex: 0 0 auto;
+  transition: all var(--transition-fast);
+}
+.chip:hover { border-color: var(--on-surface-variant); }
+.chip.is-selected {
+  background: var(--primary); border-color: var(--primary); color: var(--on-primary);
+  box-shadow: var(--elevation-primary);
+}
+
+/* Read-only breadcrumb tag. Deliberately NOT chip-shaped: in production
+   these looked identical to selectable filter chips. */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--surface-container); color: var(--on-surface-variant);
+}
+.tag-row { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; }
+/* A tag that clears a filter is a button, so it gets a press affordance. */
+button.tag { gap: var(--space-xs); transition: background var(--transition-fast); }
+button.tag:hover { background: var(--outline-variant); color: var(--on-surface); }
+
+.scroller { position: relative; }
+.scroller::after {
+  content: ''; position: absolute; inset: 0 0 0 auto;
+  width: var(--space-3xl); pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface-container-lowest));
+}
+
+/* ---------- Button ---------- */
+/* One shape language: the button, the chip and the nav are the same family
+   of fully-rounded shapes. Mixed radii are the fastest way to make a careful
+   layout look accidental. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+  width: 100%; min-height: 56px; padding: 0 var(--space-2xl);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+              box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.btn--primary {
+  background: var(--gradient-primary); color: var(--on-primary);
+  box-shadow: var(--elevation-primary);
+}
+.btn--primary:hover:not(:disabled) { box-shadow: var(--elevation-3); }
+.btn--primary:active:not(:disabled) { transform: translateY(1px); box-shadow: var(--elevation-1); }
+.btn--outline {
+  background: var(--surface); border: 1px solid var(--outline); color: var(--on-surface);
+  box-shadow: var(--elevation-1);
+}
+.btn--outline:hover:not(:disabled) { border-color: var(--on-surface-variant); box-shadow: var(--elevation-2); }
+.btn--outline:active:not(:disabled) { transform: translateY(1px); box-shadow: none; }
+.btn--destructive { background: var(--surface); border: 1px solid var(--error); color: var(--error); }
+.btn--destructive:hover:not(:disabled) { background: var(--error-container); }
+.btn:disabled {
+  background: var(--surface-container); border-color: transparent;
+  color: var(--on-surface-variant); cursor: not-allowed; opacity: 1;
+  box-shadow: none; transform: none;
+}
+.btn--sm { min-height: var(--touch-target-min); width: auto; padding: 0 var(--space-xl); }
+
+.link-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--touch-target-min);
+  padding: 0 var(--space-md); margin: 0 calc(var(--space-md) * -1);
+  color: var(--primary); border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+.link-btn:hover { background: var(--primary-container); }
+
+/* ---------- TextField ---------- */
+.field { display: block; }
+.field__row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-md); margin-bottom: var(--space-sm);
+}
+.field__label { display: block; color: var(--on-surface-variant); }
+/* Taller and rounder than instinct suggests. The padding inside a field is
+   most of what separates a form that feels considered from one that feels
+   cramped — and it costs nothing but vertical space. */
+.field__input, .field__textarea {
+  display: block; width: 100%; min-height: 58px;
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--surface); border: 1px solid var(--outline);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.field__textarea { min-height: 132px; resize: vertical; }
+/* A placeholder is a hint, not content: it must never read as a filled value. */
+.field__input::placeholder, .field__textarea::placeholder { color: var(--on-surface-variant); opacity: 0.6; }
+.field__input:focus, .field__textarea:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-container);
+}
+.field__input.has-error, .field__textarea.has-error { border-color: var(--error); }
+.field__help { display: block; margin-top: var(--space-sm); color: var(--on-surface-variant); }
+.field__help--error { color: var(--error); }
+.field__wrap { position: relative; }
+.field__wrap .field__input { padding-right: 56px; }
+.field__wrap--lead .field__input { padding-left: 56px; }
+.field__lead {
+  position: absolute; left: var(--space-lg); top: 50%; transform: translateY(-50%);
+  display: flex; color: var(--on-surface-variant); pointer-events: none;
+}
+.field__affix {
+  position: absolute; right: var(--space-sm); top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch-target-min); height: var(--touch-target-min);
+  border-radius: var(--radius-full); color: var(--on-surface-variant);
+}
+.field__affix:hover { background: var(--surface-container); }
+.field__counter { display: block; text-align: right; margin-top: var(--space-sm); color: var(--on-surface-variant); }
+
+.search { position: relative; }
+.search__icon {
+  position: absolute; left: var(--space-lg); top: 50%; transform: translateY(-50%);
+  color: var(--on-surface-variant); pointer-events: none; display: flex;
+}
+.search .field__input { padding-left: 52px; }
+
+/* ---------- Segmented control ---------- */
+.segmented {
+  display: flex; padding: var(--space-xs); gap: var(--space-xs);
+  background: var(--surface-container); border-radius: var(--radius-md);
+}
+.segmented__item {
+  flex: 1; min-height: var(--touch-target-min);
+  border-radius: var(--radius-sm); color: var(--on-surface-variant);
+  transition: all var(--transition-fast);
+}
+.segmented__item.is-active { background: var(--surface); color: var(--on-surface); box-shadow: var(--elevation-1); }
+
+/* Segmented control sitting on the hero colour. */
+.segmented--onhero { background: rgba(255, 255, 255, 0.18); }
+.segmented--onhero .segmented__item { color: rgba(255, 255, 255, 0.88); }
+.segmented--onhero .segmented__item.is-active { background: var(--surface); color: var(--primary); }
+
+/* ---------- StepProgress ---------- */
+.steps { display: flex; align-items: center; gap: var(--space-md); }
+.steps__track { display: flex; gap: var(--space-xs); flex: 1; }
+.steps__seg { height: 4px; flex: 1; border-radius: var(--radius-full); background: var(--outline-variant); transition: background var(--transition-base); }
+.steps__seg.is-done { background: var(--primary); }
+.steps__seg.is-current { background: var(--gradient-primary); box-shadow: var(--elevation-primary); }
+.steps__label { color: var(--on-surface-variant); flex: 0 0 auto; }
+
+/* ---------- ListRow ---------- */
+.row {
+  display: flex; align-items: center; gap: var(--space-lg);
+  width: 100%; min-height: 60px;
+  padding: var(--space-lg) var(--space-xl); text-align: left;
+  color: inherit; text-decoration: none;
+}
+.row__body { flex: 1; min-width: 0; }
+.row__chev { flex: 0 0 auto; color: var(--on-surface-variant); display: flex; }
+.row__icon {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: var(--icon-tile); height: var(--icon-tile); border-radius: var(--radius-md);
+  background: var(--primary-container); color: var(--on-primary-container);
+}
+/* Category tiles. Colour is the fastest way to tell list rows apart at a
+   glance, and production gave every row the same blue dot. */
+.row__icon--accent  { background: var(--accent-container);  color: var(--on-accent-container); }
+.row__icon--warning { background: var(--warning-container); color: var(--warning); }
+.row__icon--success { background: var(--success-container); color: var(--success); }
+.row__icon--muted   { background: var(--surface-container); color: var(--on-surface-variant); }
+.row__icon--lg      { width: var(--icon-tile-lg); height: var(--icon-tile-lg); border-radius: var(--radius-lg); }
+
+/* Aligns a second line under the TITLE of an icon row, not under the icon. */
+.indent-tile { padding-left: calc(var(--icon-tile) + var(--space-md)); }
+.divider { height: 1px; background: var(--outline-variant); margin: 0 var(--space-xl); }
+
+/* ---------- StickyActionBar ---------- */
+.sticky-bar {
+  flex: 0 0 auto; position: relative; z-index: 5;
+  padding: var(--space-lg) var(--page-gutter);
+  padding-bottom: max(calc(var(--space-lg) + var(--gesture-bar-space)), env(safe-area-inset-bottom));
+  background: var(--surface); border-top: 1px solid var(--outline-variant);
+  box-shadow: 0 -6px 20px rgba(26, 28, 25, 0.06);
+}
+.sticky-bar__hint { display: block; text-align: center; margin-top: var(--space-sm); color: var(--on-surface-variant); }
+
+/* ---------- Note (inline callout) ----------
+   Production put "SERVICE STARTS AT / P600" in a tinted panel with no border.
+   Same panel, but the label, the amount and the caveat are three distinct
+   type steps instead of two, so the price is not competing with its own
+   heading. */
+.note {
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+.note__value { display: block; margin-top: var(--space-xs); }
+.note__body  { display: block; margin-top: var(--space-sm); opacity: 0.85; }
+
+/* ---------- Radio (inside a selectable Card) ----------
+   The card is the tap target, so the control itself is decorative and does
+   not need its own 48px box. */
+.radio-row { display: flex; align-items: flex-start; gap: var(--space-lg); width: 100%; text-align: left; }
+.radio {
+  flex: 0 0 auto; margin-top: 2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: var(--radius-full);
+  border: 2px solid var(--outline); background: var(--surface);
+  transition: border-color var(--transition-fast);
+}
+.radio.is-checked { border-color: var(--primary); }
+.radio.is-checked::after {
+  content: ''; width: 10px; height: 10px;
+  border-radius: var(--radius-full); background: var(--primary);
+}
+
+/* ---------- Labelled divider ---------- */
+.divider-row { display: flex; align-items: center; gap: var(--space-lg); }
+.divider-row::before, .divider-row::after {
+  content: ''; flex: 1; height: 1px; background: var(--outline-variant);
+}
+
+/* ---------- Support reply ----------
+   Tinted and indented so a support answer never reads as more of the
+   customer's own message. */
+.reply {
+  margin-top: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-sm);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+.reply__body { display: block; margin-top: var(--space-xs); }
+
+/* Fade behind the floating nav. */
+.nav-scrim {
+  position: absolute; left: 0; right: 0; z-index: 9;
+  bottom: 0; height: calc(var(--bottom-nav-height) + var(--bottom-nav-inset) + var(--space-xl));
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(245, 246, 241, 0) 0%,
+    var(--surface-container-lowest) 55%);
+}
+
+/* ---------- BottomNav ---------- */
+.bottom-nav {
+  position: absolute; left: var(--page-gutter); right: var(--page-gutter);
+  bottom: var(--bottom-nav-inset); height: var(--bottom-nav-height);
+  display: flex; align-items: stretch;
+  background: var(--surface); border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-full); box-shadow: var(--elevation-3);
+  overflow: hidden; z-index: 10;
+}
+.bottom-nav__item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+  color: var(--on-surface-variant); text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.bottom-nav__item.is-active { color: var(--primary); }
+/* Flutter: the indicator NavigationBar already draws. The active tab was
+   carried by colour alone, which is the one signal a colour-blind user does
+   not receive. */
+.bottom-nav__pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 58px; height: 30px; border-radius: var(--radius-full);
+  background: transparent;
+  transition: background var(--transition-base);
+}
+.bottom-nav__item.is-active .bottom-nav__pill { background: var(--primary-container); }
+
+/* ---------- Avatar ---------- */
+.avatar {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: var(--radius-full);
+  background: var(--primary-container); color: var(--on-primary-container);
+  overflow: hidden;
+}
+.avatar--lg { width: 96px; height: 96px; box-shadow: 0 0 0 4px var(--surface), var(--elevation-2); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-wrap { position: relative; display: inline-flex; }
+.avatar-edit {
+  position: absolute; right: -4px; bottom: -4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch-target-min); height: var(--touch-target-min);
+  border-radius: var(--radius-full);
+}
+.avatar-edit__dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  background: var(--primary); color: var(--on-primary);
+  border: 2px solid var(--surface-container-lowest);
+}
+
+/* ---------- Empty / Loading / Error ---------- */
+.state {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: var(--space-md);
+  padding: var(--space-4xl) var(--space-xl);
+}
+.state__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px; border-radius: var(--radius-full);
+  background: var(--surface); color: var(--on-surface-variant);
+  border: 1px solid var(--outline-variant);
+  box-shadow: var(--elevation-1);
+}
+.state__body { color: var(--on-surface-variant); max-width: 30ch; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-container) 25%, var(--surface-container-lowest) 37%, var(--surface-container) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+.skeleton--text { height: 14px; margin-bottom: var(--space-sm); }
+.skeleton--title { height: 20px; width: 60%; margin-bottom: var(--space-md); }
+
+/* ---------- StateSwitcher (prototype chrome — NOT part of the app) ---------- */
+.state-switch {
+  display: flex; align-items: center; gap: var(--space-xs);
+  padding: var(--space-xs); margin: 0 var(--page-gutter) var(--space-md);
+  border: 1px dashed var(--outline); border-radius: var(--radius-sm);
+  background: var(--surface-container-lowest);
+}
+.state-switch__label { color: var(--on-surface-variant); padding-left: var(--space-xs); }
+/* In the top bar it is a single inline row. */
+.proto__topbar .state-switch { margin: 0; background: var(--surface-container-lowest); }
+.state-switch__btn { padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-sm); color: var(--on-surface-variant); }
+.state-switch__btn.is-active { background: var(--on-surface); color: var(--surface); }
+
+/* ---------- utilities ---------- */
+/* ---------- Avatar ring ----------
+   A hairline ring so a photo of any brightness still separates from the card. */
+.avatar-ring {
+  flex: 0 0 auto; display: inline-flex; border-radius: var(--radius-full);
+  box-shadow: 0 0 0 1px var(--outline-variant);
+}
+
+/* The pill loses its dot when it carries a glyph instead. */
+.pill > svg { margin-right: -2px; }
+
+/* =========================================================================
+   SHELL — the app scaffold: coloured hero + lifted sheet
+   -------------------------------------------------------------------------
+   One structure for every screen. The hero is painted by the shell itself so
+   the colour continues behind the sheet's rounded corners; the sheet is the
+   only scrolling region.
+   ========================================================================= */
+.shell {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--gradient-primary);
+}
+.shell__hero {
+  flex: 0 0 auto; position: relative; z-index: 1;
+  padding: calc(var(--status-bar-height) + var(--space-md))
+           var(--page-gutter) var(--space-2xl);
+  color: var(--on-primary);
+}
+/* Tab screens have no back button, so their content would otherwise start
+   hard against the status bar. */
+.shell__hero--tab { padding-top: calc(var(--status-bar-height) + var(--space-xl)); }
+.shell__sheet {
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: var(--space-2xl) 0 var(--space-2xl);
+}
+.shell__sheet--flush { padding-top: 0; }
+/* Clearance so the last row of a list is never trapped under the floating
+   nav. This was the overlap. */
+.shell__sheet--nav { padding-bottom: var(--list-bottom-clearance); }
+
+/* ---- Everything inside the hero is on colour, so it inverts ---- */
+.hero-title { display: flex; align-items: flex-start; gap: var(--space-lg); }
+.hero-title__sub { color: rgba(255, 255, 255, 0.86); margin-top: var(--space-xs); }
+
+.shell__hero .header { padding: 0; background: transparent; }
+.shell__hero .header__back { color: var(--on-primary); }
+.shell__hero .header__back:hover { background: rgba(255, 255, 255, 0.16); }
+.shell__hero .header__subtitle { color: rgba(255, 255, 255, 0.86); }
+.shell__hero .header__title { color: var(--on-primary); }
+.shell__hero .section-label { color: rgba(255, 255, 255, 0.82); }
+.shell__hero .section-label::before { background: rgba(255, 255, 255, 0.45); }
+.shell__hero .c-primary,
+.shell__hero .c-on-surface-variant { color: rgba(255, 255, 255, 0.86); }
+
+/* Step progress reads on colour: an unfilled segment is a white veil, a
+   filled one is solid white. */
+.shell__hero .steps__seg { background: rgba(255, 255, 255, 0.30); }
+.shell__hero .steps__seg.is-done,
+.shell__hero .steps__seg.is-current { background: #FFFFFF; box-shadow: none; }
+.shell__hero .steps__label { color: rgba(255, 255, 255, 0.86); }
+
+/* An outline button on colour is white-on-transparent, not white-on-white. */
+.shell__hero .btn--outline {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.shell__hero .btn--outline:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.24); border-color: #FFFFFF;
+}
+.shell__hero .link-btn { color: var(--on-primary); }
+.shell__hero .link-btn:hover { background: rgba(255, 255, 255, 0.16); }
+
+/* The white primary action used on the Home hero: inverted, so it still
+   reads as THE action when the background is already the brand colour. */
+.btn--onhero {
+  background: var(--surface); color: var(--primary);
+  box-shadow: var(--elevation-2);
+}
+.btn--onhero:hover:not(:disabled) { background: #FFFFFF; box-shadow: var(--elevation-3); }
+.btn--onhero:active:not(:disabled) { transform: translateY(1px); box-shadow: var(--elevation-1); }
+
+/* Search sitting in the hero. */
+.shell__hero .search .field__input {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.38);
+  color: var(--on-primary);
+}
+.shell__hero .search .field__input::placeholder { color: rgba(255, 255, 255, 0.78); opacity: 1; }
+.shell__hero .search .field__input:focus {
+  background: rgba(255, 255, 255, 0.24); border-color: #FFFFFF; box-shadow: none;
+}
+.shell__hero .search__icon { color: rgba(255, 255, 255, 0.86); }
+
+/* Profile identity block, on colour. */
+.hero-identity { display: flex; flex-direction: column; align-items: center; gap: var(--space-md); }
+.hero-identity .avatar--lg { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.28); }
+.hero-identity__name { color: var(--on-primary); }
+.hero-identity__mail { color: rgba(255, 255, 255, 0.86); }
+
+/* =========================================================================
+   AUTH — hero over a lifted sheet
+   -------------------------------------------------------------------------
+   The layout is: brand lockup, a large greeting, artwork bleeding off the
+   right edge, then a white sheet that overlaps the artwork and holds the
+   form. The sheet is the only scrolling region, so the greeting stays put
+   while a keyboard is open — which is the whole reason this pattern is worth
+   the extra structure on a login screen.
+
+   Flutter: a Column of [hero, Expanded(child: sheet)]. The overlap is a
+   negative Transform.translate on the sheet, or a Stack with the sheet
+   Positioned. The sheet is a Container with a vertical-only BorderRadius.
+   ========================================================================= */
+.auth { display: flex; flex-direction: column; height: 100%; background: var(--surface-container-lowest); }
+
+.auth { background: var(--gradient-primary); }
+.auth__hero {
+  position: relative; flex: 0 0 auto; overflow: hidden;
+  padding: calc(var(--status-bar-height) + var(--space-xl))
+           var(--page-gutter) var(--space-3xl);
+  color: var(--on-primary);
+}
+/* Two soft circles instead of artwork — the same treatment the Home hero and
+   the onboarding panels use, so the brand colour is doing the work. */
+.auth__hero::before, .auth__hero::after {
+  content: ''; position: absolute; border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.10); pointer-events: none;
+}
+.auth__hero::before { width: 210px; height: 210px; top: -80px; right: -60px; }
+.auth__hero::after  { width: 130px; height: 130px; bottom: -60px; right: 90px; background: rgba(255,255,255,0.07); }
+.auth__greeting { position: relative; }
+.auth__greeting p { color: rgba(255, 255, 255, 0.86); }
+.auth__brand { position: relative; color: rgba(255, 255, 255, 0.92); }
+
+.auth__sheet {
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  margin-top: calc(var(--space-2xl) * -1);
+  padding: var(--space-2xl) var(--page-gutter) var(--space-2xl);
+  background: var(--surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -8px 24px rgba(26, 28, 25, 0.07);
+}
+
+/* =========================================================================
+   ONBOARDING
+   ========================================================================= */
+.onb { display: flex; flex-direction: column; height: 100%; background: var(--surface-container-lowest); }
+.onb__top {
+  flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--status-bar-height) + var(--space-sm)) var(--page-gutter) var(--space-md);
+}
+.onb__body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 var(--page-gutter); }
+
+/* The art panel. A real illustrator should replace this — it is built from
+   the design system so it is honest about being a placeholder, rather than
+   stock art that sets an expectation the app cannot meet. */
+.onb-art {
+  position: relative; overflow: hidden;
+  height: 300px; border-radius: var(--radius-xl);
+  background: var(--gradient-primary);
+  box-shadow: var(--elevation-primary);
+  display: grid; place-items: center;
+}
+.onb-art--accent { background: var(--gradient-accent); box-shadow: var(--elevation-accent); }
+.onb-art::before, .onb-art::after {
+  content: ''; position: absolute; border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.10); pointer-events: none;
+}
+.onb-art::before { width: 240px; height: 240px; top: -110px; left: -70px; }
+.onb-art::after  { width: 160px; height: 160px; bottom: -80px; right: -40px; }
+.onb-art__glyph {
+  position: relative;
+  display: grid; place-items: center;
+  width: 132px; height: 132px; border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.18); color: #FFFFFF;
+}
+/* Two small cards floating over the art, each naming something real the
+   screen behind it actually does. */
+.onb-chip {
+  position: absolute; display: flex; align-items: center; gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface); color: var(--on-surface);
+  border-radius: var(--radius-md); box-shadow: var(--elevation-2);
+  white-space: nowrap;
+}
+.onb-chip--a { top: 40px; right: 18px; }
+.onb-chip--b { bottom: 44px; left: 18px; }
+
+.onb__copy { padding: var(--space-2xl) 0 0; }
+
+.onb-dots { display: flex; gap: var(--space-sm); align-items: center; }
+.onb-dot {
+  width: 8px; height: 8px; border-radius: var(--radius-full);
+  background: var(--outline); transition: all var(--transition-base);
+}
+.onb-dot.is-active { width: 26px; background: var(--primary); }
+
+/* =========================================================================
+   BOTTOM SHEET — Flutter: showModalBottomSheet
+   Used for filters, so a control that is only occasionally needed stops
+   taking permanent space at the top of a list.
+   ========================================================================= */
+.sheet-scrim {
+  position: absolute; inset: 0; z-index: 20;
+  display: flex; align-items: flex-end;
+  background: rgba(26, 28, 25, 0.45);
+  animation: sheet-fade var(--transition-base);
+}
+.sheet {
+  width: 100%; max-height: 80%; overflow-y: auto;
+  background: var(--surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: var(--space-md) var(--page-gutter)
+           calc(var(--space-2xl) + var(--gesture-bar-space));
+  box-shadow: var(--elevation-3);
+  animation: sheet-rise var(--transition-base);
+}
+.sheet__grabber {
+  display: block; width: 40px; height: 4px; margin: 0 auto var(--space-lg);
+  border-radius: var(--radius-full); background: var(--outline);
+}
+@keyframes sheet-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheet-rise { from { transform: translateY(16px); } to { transform: none; } }
+
+/* Filter trigger: a count badge is the only way a collapsed filter tells you
+   it is doing something. */
+.filter-btn { position: relative; }
+.filter-btn__count {
+  position: absolute; top: -4px; right: -4px;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--accent); color: var(--on-accent);
+  font-size: 11px; font-weight: 700;
+  border: 2px solid var(--primary);
+}
+
+/* ---------- Auth backdrop ----------
+   A single soft wash behind the mark. Both auth screens were a flat slab of
+   off-white with one bitmap floating in it; this gives the mark a ground to
+   sit on without adding a single new element to the page. */
+.screen--auth { position: relative; }
+.screen--auth::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 320px;
+  background: var(--gradient-wash); pointer-events: none;
+}
+.screen--auth > * { position: relative; }
+
+/* ---------- Profile header wash ---------- */
+.profile-head {
+  position: relative;
+  padding: var(--space-3xl) var(--page-gutter) var(--space-xl);
+  text-align: center;
+}
+.profile-head::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gradient-wash); pointer-events: none;
+}
+.profile-head > * { position: relative; }
+
+/* ---------- Section label with a rule ----------
+   The label was a lone grey line of micro-caps and read as a stray caption.
+   A short leading rule anchors it to the group it names. */
+.section-label { display: flex; align-items: center; gap: var(--space-sm); }
+.section-label::before {
+  content: ''; width: 14px; height: 2px; border-radius: var(--radius-full);
+  background: var(--outline); flex: 0 0 auto;
+}
+
+.stack { display: flex; flex-direction: column; }
+.gap-xs { gap: var(--space-xs); }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+.gap-xl { gap: var(--space-xl); }
+.gap-2xl { gap: var(--space-2xl); }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+.row-start { display: flex; align-items: flex-start; gap: var(--space-md); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+.mt-2xl { margin-top: var(--space-2xl); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.text-center { text-align: center; }
+.flex-1 { flex: 1; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* =========================================================================
+   STYLE GUIDE (prototype chrome — NOT part of the app)
+   Documentation layout only. None of these classes ship.
+   ========================================================================= */
+.sg {
+  width: 100%; max-width: 1080px;
+  padding-bottom: var(--space-4xl);
+  color: var(--on-surface);
+}
+.sg-head {
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl);
+  box-shadow: var(--elevation-1);
+}
+.sg-rules { margin-top: var(--space-2xl); }
+.sg-list { margin: 0; padding-left: 1.15em; list-style: revert; }
+.sg-list li { margin-top: var(--space-md); color: var(--on-surface-variant); }
+.sg-list li::marker { color: var(--outline); }
+.sg-list b { color: var(--on-surface); }
+.sg code {
+  background: var(--surface-container); border-radius: 4px;
+  padding: 1px 5px; font-size: 0.92em;
+}
+
+.sg-block { margin-top: var(--space-4xl); }
+.sg-block > h2 { margin-bottom: var(--space-sm); }
+.sg-block__lead { max-width: 68ch; margin-bottom: var(--space-2xl); }
+
+.sg-grid {
+  display: grid; gap: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.sg-cols {
+  display: grid; gap: var(--space-2xl);
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  align-items: start;
+}
+
+.sg-swatch {
+  display: flex; align-items: center; gap: var(--space-lg);
+  background: var(--surface); border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg); padding: var(--space-md);
+}
+.sg-swatch__chip {
+  flex: 0 0 auto; width: 104px; height: 64px;
+  border-radius: var(--radius-md); border: 1px solid var(--outline-variant);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 6px; font-size: 11px; font-weight: 600;
+}
+
+.sg-type { display: flex; flex-direction: column; gap: var(--space-md); }
+.sg-type__row {
+  display: grid; grid-template-columns: 260px 1fr; gap: var(--space-2xl);
+  align-items: center;
+  background: var(--surface); border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg); padding: var(--space-lg);
+}
+.sg-type__meta p { margin-top: 1px; }
+
+.sg-scale { display: flex; flex-direction: column; gap: var(--space-sm); }
+.sg-scale__row { display: flex; align-items: center; gap: var(--space-md); }
+.sg-bar { height: 18px; border-radius: 4px; background: var(--primary); }
+
+.sg-radii { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.sg-radii__item { text-align: center; }
+.sg-radii__box {
+  display: block; width: 76px; height: 60px; margin-bottom: var(--space-sm);
+  background: var(--surface); border: 2px solid var(--primary);
+}
+.sg-elev { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.sg-elev__box {
+  display: flex; align-items: center; justify-content: center;
+  width: 150px; height: 74px; border-radius: var(--radius-lg);
+  background: var(--surface); border: 1px solid var(--outline-variant);
+  font-size: 13px; color: var(--on-surface-variant);
+}
+
+.sg-specimens {
+  display: grid; gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+/* Specimens sit on the app's own page ground, not the guide's. Without this
+   the disabled button is invisible: its fill is --surface-container, which is
+   also the colour of this documentation page. */
+.sg-specimen {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+.sg-specimen > p { margin-top: var(--space-md); }
+.sg-inline { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); }
+
+/* ---- Style guide: the downloadable handoff files ---- */
+.sg-files {
+  display: grid; gap: var(--space-md); margin-top: var(--space-2xl);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.sg-file {
+  display: flex; flex-direction: column;
+  padding: var(--space-lg);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  text-decoration: none; color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+}
+.sg-file:hover { border-color: var(--primary); box-shadow: var(--elevation-2); }
+.sg-file:active { transform: translateY(1px); }
+.sg-file__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+.sg-file__desc { flex: 1; margin-top: var(--space-sm); }
+.sg-file__cta { color: var(--primary); margin-top: var(--space-lg); }
+.sg-file__cta::after { content: ' ↓'; }
