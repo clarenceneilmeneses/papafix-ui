@@ -31,6 +31,28 @@ On desktop it renders inside a device mock that scales to fit the window, so the
 
 ---
 
+## Deploying (Vercel)
+
+The app is **not at the repository root** — it lives in `prototype/`. Vercel builds
+from the root by default, finds no `package.json` or `index.html` there, and returns
+**404: NOT_FOUND**.
+
+In the Vercel project: **Settings → Build and Deployment → Root Directory → `prototype`**,
+then redeploy. Everything else is picked up from `prototype/vercel.json`.
+
+That file also contains the SPA rewrite:
+
+```json
+{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+```
+
+React Router owns the paths, so any request that is not a real file has to serve
+`index.html` — without this, `/home` and `/style` 404 on refresh or when someone
+opens a shared link. Vercel checks the filesystem before applying rewrites, so the
+`/handoff/*` downloads are still served as real files.
+
+---
+
 ## For the mobile developer
 
 Start with **`prototype/handoff/DESIGN-SYSTEM.md`**. It is written to be pasted into Claude Code (or any agent) as the build spec, and it is self-contained — you do not need to read the prototype source to build a screen correctly.
