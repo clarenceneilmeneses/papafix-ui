@@ -19,6 +19,16 @@ import Profile from './screens/Profile.jsx';
 import Addresses from './screens/Addresses.jsx';
 import Support from './screens/Support.jsx';
 
+import TechSignIn from './screens/tech/SignIn.jsx';
+import TechHome from './screens/tech/Home.jsx';
+import TechJobs from './screens/tech/Jobs.jsx';
+import TechJobDetail from './screens/tech/JobDetail.jsx';
+import TechSchedule from './screens/tech/Schedule.jsx';
+import TechProfile from './screens/tech/Profile.jsx';
+import TechEarnings from './screens/tech/Earnings.jsx';
+import TechReviews from './screens/tech/Reviews.jsx';
+import TechSupport from './screens/tech/Support.jsx';
+
 import BookingFlow from './screens/book/BookingFlow.jsx';
 import Category from './screens/book/Category.jsx';
 import AirconUnit from './screens/book/AirconUnit.jsx';
@@ -67,6 +77,21 @@ createRoot(document.getElementById('root')).render(
             <Route path=":category/details" element={<JobDetails />} />
             <Route path=":category/technician" element={<Technician />} />
           </Route>
+
+          {/* ---- Technician app ----
+              Same components, same tokens, different screens. The colour
+              roles invert under data-app='technician' (see tokens.css);
+              nothing below picks a hue. */}
+          <Route path="/tech" element={<Navigate to="/tech/sign-in" replace />} />
+          <Route path="/tech/sign-in" element={<TechSignIn />} />
+          <Route path="/tech/home" element={<TechHome />} />
+          <Route path="/tech/jobs" element={<TechJobs />} />
+          <Route path="/tech/jobs/:id" element={<TechJobDetail />} />
+          <Route path="/tech/schedule" element={<TechSchedule />} />
+          <Route path="/tech/profile" element={<TechProfile />} />
+          <Route path="/tech/earnings" element={<TechEarnings />} />
+          <Route path="/tech/reviews" element={<TechReviews />} />
+          <Route path="/tech/support" element={<TechSupport />} />
 
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>

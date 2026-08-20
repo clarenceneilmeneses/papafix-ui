@@ -9,18 +9,18 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const primary = Color(0xFF0B57D0); // --primary
+  static const primary = Color(0xFFC2410C); // --primary
   static const onPrimary = Color(0xFFFFFFFF); // --on-primary
-  static const primaryContainer = Color(0xFFDCE6FA); // --primary-container
-  static const onPrimaryContainer = Color(0xFF0A2E6B); // --on-primary-container
-  static const accent = Color(0xFFC2410C); // --accent
+  static const primaryContainer = Color(0xFFFFEDD5); // --primary-container
+  static const onPrimaryContainer = Color(0xFF7C2D12); // --on-primary-container
+  static const accent = Color(0xFF0B57D0); // --accent
   static const onAccent = Color(0xFFFFFFFF); // --on-accent
-  static const accentContainer = Color(0xFFFFEDD5); // --accent-container
-  static const onAccentContainer = Color(0xFF7C2D12); // --on-accent-container
-  static const primaryBright = Color(0xFF1565E0); // --primary-bright
-  static const primaryDeep = Color(0xFF073B8F); // --primary-deep
-  static const accentBright = Color(0xFFF97316); // --accent-bright
-  static const accentDeep = Color(0xFFC2410C); // --accent-deep
+  static const accentContainer = Color(0xFFDCE6FA); // --accent-container
+  static const onAccentContainer = Color(0xFF0A2E6B); // --on-accent-container
+  static const primaryBright = Color(0xFFE8590C); // --primary-bright
+  static const primaryDeep = Color(0xFF7C2D12); // --primary-deep
+  static const accentBright = Color(0xFF1565E0); // --accent-bright
+  static const accentDeep = Color(0xFF073B8F); // --accent-deep
   static const surface = Color(0xFFFFFFFF); // --surface
   static const surfaceLowest = Color(0xFFF5F6F1); // --surface-container-lowest
   static const surfaceContainer = Color(0xFFEDEEE9); // --surface-container

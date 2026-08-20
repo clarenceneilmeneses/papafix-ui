@@ -59,10 +59,18 @@
   /* ---------------------------------------------------------------------
      SECONDARY / BRAND ACCENT — ColorScheme.secondary
      The logo is orange; the product was blue-only, so the app and its own
-     icon looked unrelated. The orange is a real ramp now, but it stays a
-     SECONDARY: blue still carries every primary action and every selected
-     state. Orange appears on brand surfaces, the aircon category (the
-     flagship service) and nothing else. If you add a third use, question it.
+     icon looked unrelated. The orange is a real ramp now.
+
+     WHICH HUE IS PRIMARY DEPENDS ON THE APP. See [data-app] at the bottom of
+     this file. In the CUSTOMER app blue is primary and orange is secondary.
+     The TECHNICIAN app inverts it — orange primary, blue secondary — and its
+     launcher icon is blue, so the two apps are told apart at a glance on a
+     phone that has both. That inversion is deliberate.
+
+     What does NOT change is that there are only two hues and one role each.
+     Within either app: one primary carries every primary action and every
+     selected state; the secondary appears on brand surfaces and the aircon
+     category and nothing else. If you add a third use, question it.
      --------------------------------------------------------------------- */
   --accent:                    #C2410C;   /* 5.0:1 on white — safe for text */
   --on-accent:                 #FFFFFF;
@@ -168,4 +176,48 @@
 
   --transition-fast: 120ms ease;
   --transition-base: 200ms ease;
+}
+
+/* =========================================================================
+   APP THEME — which hue plays which role
+   -------------------------------------------------------------------------
+   ONE palette, TWO role assignments. Set data-app on any ancestor and every
+   component below it re-roles itself; no component reads a hue directly.
+
+   Flutter: build two ColorSchemes from the same seed constants and pass the
+   right one to MaterialApp.theme per flavour. Do not fork the palette.
+
+   Note the orange used for PRIMARY is --accent-deep (#C2410C, 5.0:1 on
+   white), never --accent-bright (#F97316, 2.8:1 — fails AA). The bright stop
+   stays what it always was: large fills and gradients only, never text and
+   never a button ground.
+   ========================================================================= */
+
+[data-app='technician'] {
+  --primary:               #C2410C;   /* was --accent      */
+  --on-primary:            #FFFFFF;
+  --primary-container:     #FFEDD5;
+  --on-primary-container:  #7C2D12;
+
+  --accent:                #0B57D0;   /* was --primary     */
+  --on-accent:             #FFFFFF;
+  --accent-container:      #DCE6FA;
+  --on-accent-container:   #0A2E6B;
+
+  /* Ramp stops swap with the roles they belong to, so --primary-bright still
+     means "a brighter version of whatever is primary here". */
+  --primary-bright:        #E8590C;
+  --primary-deep:          #7C2D12;
+  --accent-bright:         #1565E0;
+  --accent-deep:           #073B8F;
+
+  /* Orange stops written out, not var()-ed: --accent-bright now points at
+     blue in this block, so referencing it here would silently invert the
+     hero gradient. Bright stops are legal here — this is a large fill. */
+  --gradient-primary: linear-gradient(135deg, #F97316 0%, #E8590C 55%, #A6350A 100%);
+  --gradient-accent:  linear-gradient(135deg, #1565E0 0%, #0B57D0 45%, #073B8F 100%);
+  --gradient-wash:    linear-gradient(180deg, var(--primary-container) 0%, rgba(255, 237, 213, 0) 100%);
+
+  --elevation-primary: 0 4px 12px rgba(194, 65, 12, 0.30);
+  --elevation-accent:  0 4px 12px rgba(11, 87, 208, 0.28);
 }

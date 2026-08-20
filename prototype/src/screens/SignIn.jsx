@@ -1,3 +1,4 @@
+import { AppMark } from '../components/AppMark.jsx';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button, Field, LinkButton, Divider, TextInput, PasswordInput } from '../components/ui.jsx';
 import { Mail, Lock, Google, ArrowRight } from '../components/Icons.jsx';
@@ -18,7 +19,10 @@ export default function SignIn() {
   return (
     <div className="auth">
       <header className="auth__hero">
-        <p className="auth__brand t-title-md">PapaFix</p>
+        <div className="row-start" style={{ gap: 'var(--space-md)', alignItems: 'center' }}>
+          <AppMark size={44} />
+          <p className="auth__brand t-title-md">PapaFix</p>
+        </div>
 
         <div className="auth__greeting" style={{ marginTop: 'var(--space-2xl)' }}>
           <h1 className="t-headline-lg">Welcome back</h1>

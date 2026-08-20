@@ -1,10 +1,10 @@
 {
   "$comment": "GENERATED from src/styles/tokens.css — do not edit. Regenerate: npm run handoff",
   "color": {
-    "primary": "#0B57D0",
+    "primary": "#C2410C",
     "on-primary": "#FFFFFF",
-    "primary-container": "#DCE6FA",
-    "on-primary-container": "#0A2E6B",
+    "primary-container": "#FFEDD5",
+    "on-primary-container": "#7C2D12",
     "surface": "#FFFFFF",
     "surface-container-lowest": "#F5F6F1",
     "surface-container": "#EDEEE9",
@@ -22,14 +22,14 @@
     "warning-container": "#FDF0DC",
     "neutral": "#494C47",
     "neutral-container": "#EDEEE9",
-    "accent": "#C2410C",
+    "accent": "#0B57D0",
     "on-accent": "#FFFFFF",
-    "accent-container": "#FFEDD5",
-    "on-accent-container": "#7C2D12",
-    "primary-bright": "#1565E0",
-    "primary-deep": "#073B8F",
-    "accent-bright": "#F97316",
-    "accent-deep": "#C2410C",
+    "accent-container": "#DCE6FA",
+    "on-accent-container": "#0A2E6B",
+    "primary-bright": "#E8590C",
+    "primary-deep": "#7C2D12",
+    "accent-bright": "#1565E0",
+    "accent-deep": "#073B8F",
     "brand-accent": "#E8590C"
   },
   "space": {
@@ -112,13 +112,13 @@
     "1": "0 1px 2px rgba(26, 28, 25, 0.05),\r\n                 0 1px 3px rgba(26, 28, 25, 0.04)",
     "2": "0 2px 4px rgba(26, 28, 25, 0.05),\r\n                 0 6px 14px rgba(26, 28, 25, 0.07)",
     "3": "0 6px 20px rgba(26, 28, 25, 0.12)",
-    "primary": "0 4px 12px rgba(11, 87, 208, 0.30)",
-    "accent": "0 4px 12px rgba(194, 65, 12, 0.28)"
+    "primary": "0 4px 12px rgba(194, 65, 12, 0.30)",
+    "accent": "0 4px 12px rgba(11, 87, 208, 0.28)"
   },
   "gradient": {
-    "primary": "linear-gradient(135deg, var(--primary-bright) 0%, var(--primary) 45%, var(--primary-deep) 100%)",
-    "accent": "linear-gradient(135deg, var(--accent-bright) 0%, var(--brand-accent) 55%, var(--accent-deep) 100%)",
-    "wash": "linear-gradient(180deg, var(--primary-container) 0%, rgba(220, 230, 250, 0) 100%)"
+    "primary": "linear-gradient(135deg, #F97316 0%, #E8590C 55%, #A6350A 100%)",
+    "accent": "linear-gradient(135deg, #1565E0 0%, #0B57D0 45%, #073B8F 100%)",
+    "wash": "linear-gradient(180deg, var(--primary-container) 0%, rgba(255, 237, 213, 0) 100%)"
   },
   "layout": {
     "touchTargetMin": "48",

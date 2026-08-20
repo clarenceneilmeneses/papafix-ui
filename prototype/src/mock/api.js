@@ -49,6 +49,22 @@ export const api = {
 
   getTechnicians: (scenario) =>
     load(scenario, data.technicians, [], 'No technicians could be reached. Check your connection and try again.'),
+
+  /* ---- technician app ---- */
+  getTechJobs: (scenario) =>
+    load(scenario, data.techJobs, [], 'Could not load your jobs.'),
+
+  getTechReviews: (scenario) =>
+    load(scenario, data.techReviews, [], 'Could not load your reviews.'),
+
+  getTechEarnings: (scenario) =>
+    load(scenario, data.techJobs.filter((j) => j.paid), [], 'Could not load your earnings.'),
+
+  getTechAvailability: (scenario) =>
+    load(scenario, data.techAvailability, { ...data.techAvailability, days: {} }, 'Could not load your schedule.'),
+
+  getTechTickets: (scenario) =>
+    load(scenario, data.techTickets, [], 'Could not load your messages.'),
 };
 
 export const SCENARIOS = ['loaded', 'loading', 'empty', 'error'];

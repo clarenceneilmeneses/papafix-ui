@@ -80,8 +80,10 @@ export const Divider = ({ label = 'or' }) => (
 );
 
 /* ---------------- Field ----------------
-   `action` puts a control on the label row (Forgot password?), so the link
-   sits with the field it belongs to instead of floating under it. */
+   `action` puts a control on the label row, for a control that qualifies the
+   field itself. Recovery links are NOT this — "Forgot password?" sits after
+   the input on both Sign In screens, because you only reach for it once the
+   password you tried has failed. */
 export function Field({ label, help, error, counter, action, children }) {
   return (
     <label className="field">

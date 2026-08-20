@@ -8,6 +8,7 @@ import {
   Mail, Lock, MapPin, Wrench, Droplet, Bolt, Snowflake, ChevronRight,
   Receipt, Calendar, Star, Sparkle, ArrowRight,
 } from '../components/Icons.jsx';
+import { AppMark } from '../components/AppMark.jsx';
 
 /* THE STYLE GUIDE.
  *
@@ -154,6 +155,44 @@ export default function StyleGuide() {
       </header>
 
       {/* ------------------------------------------------------ colour --- */}
+      <Block
+        id="brand"
+        title="Brand marks"
+        lead="One character, two grounds. The mark is the icon only — the wordmark is real text set beside it, never baked into the art. Shown at the sizes that decide an icon: a launcher tile, a list avatar, and a favicon."
+      >
+        <div className="sg-marks">
+          {[
+            ['customer', 'Customer', 'Orange ground, navy wrench.'],
+            ['technician', 'Technician', 'Blue ground, navy cap and wrench.'],
+          ].map(([app, label, note]) => (
+            <div className="sg-mark" key={app}>
+              <div>
+                <p className="t-title-md">{label}</p>
+                <p className="t-body-md c-on-surface-variant">{note}</p>
+              </div>
+              <div className="sg-mark__sizes">
+                {[96, 48, 32].map((px) => (
+                  <span className="sg-mark__size" key={px}>
+                    <AppMark size={px} app={app} />
+                    <span className="t-label-sm c-on-surface-variant">{px}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Card className="mt-2xl" inert>
+          <p className="t-body-md c-on-surface-variant">
+            The ground colour follows the app&rsquo;s primary hue and inverts
+            between the two apps, which is how someone with both installed
+            tells the launcher icons apart. Do not put the mark on a surface of
+            its own ground colour &mdash; the customer mark on
+            <code> --accent-container </code> loses its silhouette.
+          </p>
+        </Card>
+      </Block>
+
       <Block
         id="colour"
         title="Colour"

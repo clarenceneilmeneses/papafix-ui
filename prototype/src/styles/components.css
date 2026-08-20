@@ -1101,3 +1101,124 @@ button.tag:hover { background: var(--outline-variant); color: var(--on-surface);
 .sg-file__desc { flex: 1; margin-top: var(--space-sm); }
 .sg-file__cta { color: var(--primary); margin-top: var(--space-lg); }
 .sg-file__cta::after { content: ' ↓'; }
+
+/* =========================================================================
+   TECHNICIAN APP
+   Only what the customer app had no equivalent for. Everything else — cards,
+   chips, pills, fields, sheets, states — is reused as-is.
+   ========================================================================= */
+
+/* Two-sided edge fade for a scrolling filter row.
+   Production clipped the first chip mid-word ("Incoming" rendered as
+   "coming") with no affordance, so it read as a rendering fault rather than
+   as scroll-me. mask-image is used instead of an overlay gradient because it
+   is background-agnostic — the row sits on the hero on one screen and on the
+   sheet on another. See TECH-APP-REVIEW.md §4. */
+.chip-row--edge {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--space-xl), #000 calc(100% - var(--space-xl)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--space-xl), #000 calc(100% - var(--space-xl)), transparent 100%);
+}
+
+/* ---- Availability calendar ---- */
+.cal__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+.cal__nav {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch-target-min); height: var(--touch-target-min);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline); background: var(--surface); color: var(--on-surface);
+}
+.cal__nav:disabled { opacity: 0.4; }
+.cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-xs); }
+.cal__dow {
+  text-align: center; padding: var(--space-sm) 0;
+  color: var(--on-surface-variant);
+}
+.cal__day {
+  position: relative; aspect-ratio: 1; width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; border: 1px solid transparent; border-radius: var(--radius-md);
+  background: transparent; color: var(--on-surface);
+}
+.cal__day:disabled { color: var(--outline); }
+.cal__day--off { color: var(--on-surface-variant); }
+.cal__day--open { background: var(--success-container); color: var(--on-surface); }
+/* Today is a ring; selected is a fill. Production drew both as the same
+   orange and the legend listed neither, so on the default view you could not
+   tell which of the two the orange meant. */
+.cal__day--today { border-color: var(--primary); font-weight: 700; }
+.cal__day--sel { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.cal__day--sel .cal__flag { color: var(--on-primary); }
+.cal__flag { font-size: 10px; line-height: 10px; color: var(--on-surface-variant); }
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-lg); justify-content: center; }
+.legend__item { display: inline-flex; align-items: center; gap: var(--space-sm); color: var(--on-surface-variant); }
+.legend__key { width: 16px; height: 16px; border-radius: var(--radius-sm); border: 1px solid var(--outline); flex: 0 0 auto; }
+.legend__key--open { background: var(--success-container); border-color: var(--success); }
+.legend__key--off { background: var(--surface-container); }
+.legend__key--today { border: 2px solid var(--primary); background: transparent; }
+.legend__key--sel { background: var(--primary); border-color: var(--primary); }
+
+/* ---- Money ----
+   The payout is the headline and the customer price is the reference, on
+   every surface that shows both. Never two bare peso amounts. */
+.money { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.money__gross { color: var(--on-surface-variant); text-decoration: none; }
+.money__net { color: var(--success); }
+.fee-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-sm) 0;
+}
+.fee-row + .fee-row { border-top: 1px solid var(--outline-variant); }
+.fee-row--total { border-top: 1px solid var(--outline); margin-top: var(--space-xs); padding-top: var(--space-md); }
+
+/* ---- Job stage tracker ---- */
+.stages { display: flex; align-items: flex-start; gap: 0; }
+.stages__step { flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); text-align: center; }
+.stages__dot {
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--outline); background: var(--surface); color: var(--on-surface-variant);
+  flex: 0 0 auto;
+}
+.stages__step.is-done .stages__dot { background: var(--success); border-color: var(--success); color: #fff; }
+.stages__step.is-current .stages__dot { border-color: var(--primary); color: var(--primary); }
+.stages__label { color: var(--on-surface-variant); }
+.stages__step.is-current .stages__label { color: var(--primary); }
+.stages__bar { flex: 0 0 auto; height: 2px; background: var(--outline-variant); margin-top: 13px; width: 100%; }
+
+/* ---- Rating stars ---- */
+.stars { display: inline-flex; gap: 2px; color: var(--warning); }
+.stars--muted { color: var(--outline); }
+
+/* ---- Earnings hero figure ---- */
+.earn-hero { display: flex; flex-direction: column; gap: var(--space-xs); }
+
+/* Metadata lines inside a card. Each row is its own flex line with a fixed
+   icon and a truncating text cell — `.truncate` on an inline span does
+   nothing, which is what made the job cards collide. */
+.meta { display: grid; gap: var(--space-xs); min-width: 0; }
+.meta__row { display: flex; align-items: center; gap: var(--space-sm); min-width: 0; color: var(--on-surface-variant); }
+.meta__row > svg { flex: 0 0 auto; }
+.meta__text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* The money row. A label on the left and the figures on the right, never two
+   blocks fighting for the same horizontal space. */
+.money-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-md); }
+.money-row__figures { text-align: right; min-width: 0; }
+
+/* ---------- App mark ----------
+   --radius-xl is reserved for "hero surfaces and the brand mark only", which
+   is exactly this. The generated art is a full-bleed square; the rounding is
+   applied here so one asset serves every platform's icon mask. */
+.app-mark {
+  display: block;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-2);
+  flex: 0 0 auto;
+}
+
+/* Style-guide brand row */
+.sg-marks { display: flex; flex-wrap: wrap; gap: var(--space-2xl); }
+.sg-mark { display: flex; flex-direction: column; gap: var(--space-md); }
+.sg-mark__sizes { display: flex; align-items: flex-end; gap: var(--space-lg); }
+.sg-mark__size { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); }

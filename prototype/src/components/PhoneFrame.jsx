@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import { SCENARIOS } from '../mock/api.js';
 import { useScenario } from '../mock/scenario.jsx';
 import { ChevronRight, AlertTriangle } from './Icons.jsx';
@@ -11,12 +11,44 @@ import { ChevronRight, AlertTriangle } from './Icons.jsx';
  * device mock, with a collapsible screen index beside it.
  */
 
-/* One prototype, more than one app. The technician app is not built yet —
-   it is listed so the shape of the deliverable is obvious, and disabled so
-   nobody clicks into an empty section expecting screens. */
+/* One prototype, two apps. Both share the token layer and every component —
+   only the screens and the colour ROLES differ. See [data-app] in tokens.css. */
 const APPS = [
   { id: 'customer',   label: 'Customer',   ready: true },
-  { id: 'technician', label: 'Technician', ready: false },
+  { id: 'technician', label: 'Technician', ready: true },
+];
+
+const TECH_INDEX = [
+  {
+    group: 'Auth',
+    items: [['/tech/sign-in', 'Sign In']],
+  },
+  {
+    group: 'Tabs',
+    items: [
+      ['/tech/home', 'Home'],
+      ['/tech/jobs', 'Jobs'],
+      ['/tech/schedule', 'Schedule'],
+      ['/tech/profile', 'Profile'],
+    ],
+  },
+  {
+    group: 'Job',
+    items: [
+      ['/tech/jobs/tj-1', 'Incoming — decide'],
+      ['/tech/jobs/tj-3', 'Active — in progress'],
+      ['/tech/jobs/tj-4', 'Completed'],
+      ['/tech/jobs/tj-10', 'Cancelled'],
+    ],
+  },
+  {
+    group: 'Stack',
+    items: [
+      ['/tech/earnings', 'Earnings'],
+      ['/tech/reviews', 'Reviews'],
+      ['/tech/support', 'Help & Support'],
+    ],
+  },
 ];
 
 const INDEX = [
@@ -183,7 +215,8 @@ function ScenarioControl() {
 
 /* Which group holds a given path — used to auto-open the section you are in. */
 function groupOf(pathname) {
-  const hit = INDEX.find(({ items }) =>
+  const list = pathname.startsWith('/tech') ? TECH_INDEX : INDEX;
+  const hit = list.find(({ items }) =>
     items.some(([to]) => (to === '/book' ? pathname === '/book' : pathname.startsWith(to))));
   return hit ? hit.group : null;
 }
@@ -213,10 +246,17 @@ export function PhoneFrame({ children }) {
 
   /* Sections collapse. Only the one you are in opens by default, which keeps
      the index short enough to read at a glance instead of needing to scroll. */
-  const [app, setApp] = useState('customer');
+  const navigate = useNavigate();
+
+  /* Which app you are looking at is the ROUTE, not a separate toggle state —
+     otherwise deep-linking to /tech/jobs would show the customer index. */
+  const app = pathname.startsWith('/tech') ? 'technician' : 'customer';
+  const index = app === 'technician' ? TECH_INDEX : INDEX;
+
   const [open, setOpen] = useState(() => {
     const active = groupOf(pathname);
-    return Object.fromEntries(INDEX.map(({ group }) => [group, group === active]));
+    return Object.fromEntries(
+      [...INDEX, ...TECH_INDEX].map(({ group }) => [group, group === active]));
   });
 
   useEffect(() => {
@@ -239,20 +279,14 @@ export function PhoneFrame({ children }) {
               aria-selected={app === id}
               title={ready ? undefined : 'Not built yet'}
               className={`proto__app t-label-lg${app === id ? ' is-active' : ''}`}
-              onClick={() => setApp(id)}
+              onClick={() => navigate(id === 'technician' ? '/tech/home' : '/home')}
             >
               {label}
             </button>
           ))}
         </div>
 
-        {app !== 'customer' && (
-          <p className="proto__soon t-body-md">
-            The technician app has not been built yet.
-          </p>
-        )}
-
-        {app === 'customer' && INDEX.map(({ group, items }) => {
+        {index.map(({ group, items }) => {
           const isOpen = open[group];
           return (
             <div className="proto__rail-group" key={group}>
@@ -309,7 +343,7 @@ export function PhoneFrame({ children }) {
               style={{ width: DEVICE_W * scale, height: DEVICE_H * scale }}
             >
               <div className="device" style={{ transform: `scale(${scale})` }}>
-                <div className="phone">
+                <div className="phone" data-app={app}>
                   <StatusBar dark={lightTop} />
                   {children}
                   <span
